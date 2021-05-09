@@ -1,0 +1,22 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://github.com/rolling-scopes-school/wee-bee2019-NODEJS2021Q2.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+[user]
+	name = Wee-Bee2019
+	email = mz1100dvvc@gmail.com
+[remote "caesar-cipher-cli-tool"]
+	url = https://github.com/Wee-Bee2019/Caesar-cipher-CLI-tool.git
+	fetch = +refs/heads/*:refs/remotes/caesar-cipher-cli-tool/*
+[branch "Caesar-cipher-CLI-tool"]
+	remote = origin
+	merge = refs/heads/Caesar-cipher-CLI-tool
