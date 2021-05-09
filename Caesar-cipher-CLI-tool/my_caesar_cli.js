@@ -35,41 +35,44 @@ class Transformer extends Stream.Transform {
     }
 
     // calculating
-    chunk.toString('utf8').split('').map((el) => {
-      if (alphabet.includes(el) || alphabet.includes(el.toLowerCase())) {
-        let index = alphabet.indexOf(el.toLowerCase())
-        let isUpperCase
+    chunk
+      .toString('utf8')
+      .split('')
+      .map((el) => {
+        if (alphabet.includes(el) || alphabet.includes(el.toLowerCase())) {
+          let index = alphabet.indexOf(el.toLowerCase())
+          let isUpperCase
 
-        // UpperCase condition
-        if (el == el.toUpperCase()) {
-          isUpperCase = true
-        }
-
-        // shift calculating
-        el = () => {
-          if (index + this.range >= alphabet.length) {
-            return alphabet[index + this.range - alphabet.length]
+          // UpperCase condition
+          if (el == el.toUpperCase()) {
+            isUpperCase = true
           }
-          // if negative shift handling
-          if (index + this.range < 0) {
-            return alphabet[alphabet.length + (this.range + index)]
-          }
-          return alphabet[index + this.range]
-        }
 
-        // return UpperCase, if it was
-        if (isUpperCase) {
-          result.push(el().toUpperCase())
+          // shift calculating
+          el = () => {
+            if (index + this.range >= alphabet.length) {
+              return alphabet[index + this.range - alphabet.length]
+            }
+            // if negative shift handling
+            if (index + this.range < 0) {
+              return alphabet[alphabet.length + (this.range + index)]
+            }
+            return alphabet[index + this.range]
+          }
+
+          // return UpperCase, if it was
+          if (isUpperCase) {
+            result.push(el().toUpperCase())
+          } else {
+            result.push(el())
+          }
         } else {
-          result.push(el())
+          result.push(el)
         }
-      } else {
-        result.push(el)
-      }
-    })
+      })
 
-    this.push(result.join(''))    
-    callback(process.exit())    
+    this.push(result.join(''))
+    callback(process.exit())
   }
 }
 
@@ -99,6 +102,11 @@ if (options.input) inputFileName = options.input
 if (options.output) outputFileName = options.output
 if (options.action) actionType = options.action
 
+// file existing/permission check
+checkFile(inputFileName)
+checkFile(outputFileName)
+
+// stream
 pipeline(
   inputFileName ? fs.createReadStream(inputFileName, 'utf8') : process.stdin,
   new Transformer(shiftRange, actionType),
@@ -106,8 +114,18 @@ pipeline(
   (err) => {
     if (err) {
       console.error('Error: ', err)
-    } else {      
+    } else {
       // console.log('Pipeline succeeded')
     }
   }
 )
+
+// Functions
+function checkFile(path) {
+  fs.access(path, fs.F_OK, (err) => {
+    if (err) {
+      process.stderr.write(`File with name "${path}" doesn't exist. Check files name in your input line.\n`)
+    }
+    //file exists
+  })
+}
