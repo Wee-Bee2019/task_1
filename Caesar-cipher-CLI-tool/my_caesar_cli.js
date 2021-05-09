@@ -106,6 +106,12 @@ if (options.action) actionType = options.action
 checkFile(inputFileName)
 checkFile(outputFileName)
 
+// check actions
+if (actionType == 'decode' || actionType == 'encode') {  
+} else {
+  process.stderr.write(`This action - "${actionType}" doesn't support. Please check action name in your input line. It should be 'decode' or 'encode'\n`)
+}
+
 // stream
 pipeline(
   inputFileName ? fs.createReadStream(inputFileName, 'utf8') : process.stdin,
@@ -124,7 +130,7 @@ pipeline(
 function checkFile(path) {
   fs.access(path, fs.F_OK, (err) => {
     if (err) {
-      process.stderr.write(`File with name "${path}" doesn't exist. Check files name in your input line.\n`)
+      process.stderr.write(`File with name "${path}" doesn't exist. Please check files name in your input line.\n`)
     }
     //file exists
   })
