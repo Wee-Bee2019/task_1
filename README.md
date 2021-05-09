@@ -84,4 +84,4 @@ ____
 
 :exclamation: **This option is required** :exclamation:
 
-Щption for conversion operation. Accepts input "decode" or "encode"
+Option for conversion operation. Accepts input "decode" or "encode"
