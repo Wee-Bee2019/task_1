@@ -2,10 +2,10 @@
   "name": "caesar-cipher-cli-tool",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "my_caesar_cli.js",
   "scripts": {
-    "dev": "node index.js",
-    "start": "node index.js"
+    "dev": "node my_caesar_cli.js",
+    "start": "node my_caesar_cli.js"
   },
   "keywords": [],
   "author": "",
